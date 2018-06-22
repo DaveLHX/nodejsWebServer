@@ -1,15 +1,65 @@
 const express = require('express')
 const app = express()
+// to be able to connect from localhost
+var cors = require('cors')
+app.use(cors({origin: true, credentials: true}))
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/posts', (req, res) => {
-  var posts = JSON.parse(getJson())
-  res.json(posts)
+  res.json(getJson())
 })
+app.get('/posts/odd', (req, res) => {
+  res.json(getOddPost())
+})
+app.get('/posts/even', (req, res) => {
+  res.json(getEvenPost())
+})
+app.get('/posts/all', (req, res) => {
+  res.json(getJson())
+})
+
+app.get('/posts/:sort', (req, res) => {
+  console.log(req.params.sort)
+  var fs = require('fs')
+  fs.writeFile('savedParam.txt', req.params.sort, function (err) {
+    if (err) {
+      return console.log(err)
+    }
+
+    console.log('The file was saved!')
+  })
+  res.send(req.params.sort)
+})
+
+app.listen(3000, () => console.log('Example app listening on port 3000!'))
+
 function getJson () {
   var fs = require('fs')
   var content = fs.readFileSync('./posts.json')
-  return content
+  return JSON.parse(content)
 }
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+
+function isEven (n) {
+  return n % 2 === 0
+}
+
+function getEvenPost () {
+  var evenPosts = []
+  getJson().forEach(element => {
+    if (isEven(element.id)) {
+      evenPosts.push(element)
+    }
+  })
+  return evenPosts
+}
+
+function getOddPost () {
+  var evenPosts = []
+  getJson().forEach(element => {
+    if (!isEven(element.id)) {
+      evenPosts.push(element)
+    }
+  })
+  return evenPosts
+}
