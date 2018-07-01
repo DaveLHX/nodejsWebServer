@@ -15,8 +15,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/posts', (req, res) => {
-  log(req)
-  console.log(req)
+  log(req)  
   res.json(getPosts())
 })
 app.get('/posts/odd', (req, res) => {

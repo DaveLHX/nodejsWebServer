@@ -19,3 +19,6 @@ https://www.youtube.com/watch?v=WDqnaZFE7Oc
 
 
 note: Make sure to use enviroment varialbles for things like port.
+
+I installed nodeexpress to get better http wrappers
+npm install --save compression
