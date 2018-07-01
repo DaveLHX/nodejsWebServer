@@ -1,43 +1,94 @@
 const express = require('express')
 const app = express()
+const postsFile = './Data/posts.json'
+const photosFile = './Data/photos.json'
+const logFile = './Logs/log.txt'
+const port = process.env.PORT || 3000
 // to be able to connect from localhost
 var cors = require('cors')
 app.use(cors({origin: true, credentials: true}))
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => {
+  log(req)
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  res.send('Hello ' + ip + ' from port ' + port + '!!!')
+})
 
 app.get('/posts', (req, res) => {
-  res.json(getJson())
+  log(req)
+  console.log(req)
+  res.json(getPosts())
 })
 app.get('/posts/odd', (req, res) => {
+  log(req)
   res.json(getOddPost())
 })
 app.get('/posts/even', (req, res) => {
+  log(req)
   res.json(getEvenPost())
 })
 app.get('/posts/all', (req, res) => {
-  res.json(getJson())
+  log(req)
+  res.json(getPosts())
+})
+app.get('/logs', (req, res) => {
+  log(req)
+  res.end(getLogs())
+})
+app.get('/photos', (req, res) => {
+  log(req)
+  console.log(req)
+  res.json(getPhotos())
 })
 
 app.get('/posts/:sort', (req, res) => {
-  console.log(req.params.sort)
+  log(req)
+  res.send(req.params.sort)
+})
+
+function log (req) {
   var fs = require('fs')
-  fs.writeFile('savedParam.txt', req.params.sort, function (err) {
+  var datetime = '[' + new Date() + '] '
+  // req.params.sort
+  fs.appendFile(logFile, datetime + req.url + '\n', function (err) {
     if (err) {
       return console.log(err)
     }
-
-    console.log('The file was saved!')
   })
-  res.send(req.params.sort)
-})
-var port = process.env.PORT || 3000
+}
+
 app.listen(port, () => console.log('Example app listening on port: ' + port))
 
-function getJson () {
+function getPosts () {
   var fs = require('fs')
-  var content = fs.readFileSync('./posts.json')
-  return JSON.parse(content)
+
+  try {
+    var content = fs.readFileSync(postsFile)
+    return JSON.parse(content)
+  } catch (err) {
+    return 'Could not load data.'
+  }
+}
+
+function getPhotos () {
+  var fs = require('fs')
+
+  try {
+    var content = fs.readFileSync(photosFile)
+    return JSON.parse(content)
+  } catch (err) {
+    return 'Could not load data.'
+  }
+}
+
+
+function getLogs () {
+  var fs = require('fs')
+  try {
+    return fs.readFileSync(logFile)
+  } catch (err) {
+    return 'Could not log file.'
+  }
 }
 
 function isEven (n) {
@@ -46,7 +97,7 @@ function isEven (n) {
 
 function getEvenPost () {
   var evenPosts = []
-  getJson().forEach(element => {
+  getPosts().forEach(element => {
     if (isEven(element.id)) {
       evenPosts.push(element)
     }
@@ -55,11 +106,11 @@ function getEvenPost () {
 }
 
 function getOddPost () {
-  var evenPosts = []
-  getJson().forEach(element => {
+  var posts = []
+  getPosts().forEach(element => {
     if (!isEven(element.id)) {
-      evenPosts.push(element)
+      posts.push(element)
     }
   })
-  return evenPosts
+  return posts
 }
