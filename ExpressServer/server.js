@@ -81,7 +81,6 @@ function getPhotos () {
   }
 }
 
-
 function getLogs () {
   var fs = require('fs')
   try {
