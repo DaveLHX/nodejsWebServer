@@ -15,6 +15,7 @@ https://www.youtube.com/watch?v=WDqnaZFE7Oc
 5- in the azure tab Create a new web app.
 --choose linux
 6- in azure tab chose deploy to webapp
+--this is the simplest way to do it, it zips your folder and uploads it to azure. There are other ways, directly from git for example.
 
 
 note: Make sure to use enviroment varialbles for things like port.
