@@ -10,4 +10,4 @@ function getJson () {
   var content = fs.readFileSync('posts.json')
   return content
 }
-http.createServer(onRequest).listen(8000)
+http.createServer(onRequest).listen(process.env.PORT || 8000)
