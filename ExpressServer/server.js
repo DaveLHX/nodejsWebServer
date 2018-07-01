@@ -1,4 +1,5 @@
 const express = require('express')
+const compression = require('compression')
 const app = express()
 const postsFile = './Data/posts.json'
 const photosFile = './Data/photos.json'
@@ -8,6 +9,16 @@ const port = process.env.PORT || 3000
 var cors = require('cors')
 app.use(cors({origin: true, credentials: true}))
 
+/*
+stats for photos.json (5000 records)
+The file localy is 1071 KB.
+on my local instance:
+before compress:793 KB and 0.609 ms
+after  compress:125 KB and 0.340 ms
+
+*/
+app.use(compression())
+
 app.get('/', (req, res) => {
   log(req)
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
@@ -15,7 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/posts', (req, res) => {
-  log(req)  
+  log(req)
   res.json(getPosts())
 })
 app.get('/posts/odd', (req, res) => {
