@@ -16,9 +16,10 @@ https://www.youtube.com/watch?v=WDqnaZFE7Oc
 --choose linux
 6- in azure tab chose deploy to webapp
 --this is the simplest way to do it, it zips your folder and uploads it to azure. There are other ways, directly from git for example.
+--notice the appService.zipIgnorePattern in workspace settings
 
 
 note: Make sure to use enviroment varialbles for things like port.
 
 I installed nodeexpress to get better http wrappers
-npm install --save compression
+to add compression middleware npm install --save compression
