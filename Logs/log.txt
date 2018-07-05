@@ -22,3 +22,5 @@
 [Mon Jul 02 2018 10:40:47 GMT-0400 (Eastern Daylight Time)] [::1] /posts/odd
 [Mon Jul 02 2018 10:44:02 GMT-0400 (Eastern Daylight Time)] [::1] /posts/odd
 [Mon Jul 02 2018 10:47:07 GMT-0400 (Eastern Daylight Time)] [::1] GET /posts/odd
+[Thu Jul 05 2018 12:07:18 GMT-0400 (Eastern Daylight Time)] [::1] GET /
+[Thu Jul 05 2018 12:07:19 GMT-0400 (Eastern Daylight Time)] [::1] GET /favicon.ico
