@@ -22,3 +22,11 @@ https://www.youtube.com/watch?v=WDqnaZFE7Oc
 
 I installed nodeexpress to get better http wrappers
 to add compression middleware npm install --save compression
+
+
+
+
+https://github.com/SheKnowsItsAMultipass/nodejsWebServer
+
+
+https://lhx-simplenodeapp.azurewebsites.net
