@@ -7,10 +7,10 @@ const photosFile = './Data/photos.json'
 const logFile = './Logs/log.txt'
 const port = process.env.PORT || 3000
 
+// some custom logging
 app.use(customLogging)
 // to be able to connect from localhost
 app.use(cors({origin: true, credentials: true}))
-
 /*
 stats for photos.json (5000 records)
 The file localy is 1071 KB.
